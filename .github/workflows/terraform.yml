@@ -20,5 +20,9 @@ jobs:
         terraform_version: latest
     - name: Apply Terraform Configuration
       run: terraform init && terraform apply -auto-approve
+    - name: sleep
+      run:  sleep 50
+    - name: distroy
+      run:  terraform destroy -auto-approve
 
     
