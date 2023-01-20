@@ -21,7 +21,9 @@ jobs:
       with:
         terraform_version: latest
     - name: Apply Terraform Configuration
-      run: terraform init && terraform apply -auto-approve
+      run: |
+        terraform init -auto-approve
+        terraform apply -var 'name="Tags: ${{ github.event.inputs.tags }}"'
     - name: Enter name
       run:  |
         echo "Tags: ${{ github.event.inputs.tags }}"
