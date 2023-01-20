@@ -63,7 +63,7 @@ resource "aws_security_group" "My_webServer" {
     
    
 
-  }
+  
 
   ingress {
     
