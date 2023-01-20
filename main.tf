@@ -58,7 +58,7 @@ tags = {
 
 
 resource "aws_security_group" "My_webServer" {
-  name        = var.name
+  name        = "My Sg"
   description = "My First secgrup"
     
    
