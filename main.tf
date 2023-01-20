@@ -1,12 +1,4 @@
-terraform {
-  cloud {
-    organization = "artur_ayvazyan"
 
-    workspaces {
-      name = "homework_2"
-    }
-  }
-}
 
 terraform {
   required_providers {
