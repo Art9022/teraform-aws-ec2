@@ -1,7 +1,7 @@
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    tags:
+      description: 'Enter name'
 
 jobs:
   deploy:
@@ -20,6 +20,9 @@ jobs:
         terraform_version: latest
     - name: Apply Terraform Configuration
       run: terraform init && terraform apply -auto-approve
+    - name: Enter name
+      run:  |
+        echo "Tags: ${{ github.event.inputs.tags }}"
     - name: sleep
       run:  sleep 50
     - name: distroy
