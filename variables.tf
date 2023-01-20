@@ -1,5 +1,19 @@
-variable "instance_name" {
-  description = "Value of the Name tag for the EC2 instance"
+variable "name" {
+  description = "Enter Name"
   type        = string
-  default     = "Taza Valodik"
+ 
+  
+}
+
+variable "common_tags" {
+
+  description = "common tags"
+  type    = map
+  default = {
+  Ouner   = "Artur"
+  Company = "Ayvazyan LLC"
+  Enviroment = "dev"
+  
+  }
+  
 }
