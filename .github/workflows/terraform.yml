@@ -26,7 +26,7 @@ jobs:
         terraform apply -var 'name= ${{ github.event.inputs.tags }}"' -auto-approve
     
     - name: sleep
-      run:  sleep 50
+      run:  sleep 150
     - name: distroy
       run:  terraform destroy -var 'name= ${{ github.event.inputs.tags }}"' -auto-approve
 
