@@ -23,13 +23,11 @@ jobs:
     - name: Apply Terraform Configuration
       run: |
         terraform init 
-        terraform apply -var 'name="Tags: ${{ github.event.inputs.tags }}"' -auto-approve
-    - name: Enter name
-      run:  |
-        echo "Tags: ${{ github.event.inputs.tags }}"
+        terraform apply -var 'name= ${{ github.event.inputs.tags }}"' -auto-approve
+    
     - name: sleep
       run:  sleep 50
     - name: distroy
-      run:  terraform destroy -auto-approve
+      run:  terraform destroy -var 'name= ${{ github.event.inputs.tags }}"' -auto-approve
 
     
