@@ -23,6 +23,7 @@ resource "aws_vpc" "frst_vpc" {
 resource "aws_subnet" "frst_subnet" {
   vpc_id     = aws_vpc.frst_vpc.id
   cidr_block = "10.0.1.0/24"
+  map_public_ip_on_launch = true
 }
 
 resource "aws_network_interface" "interface_0" {
