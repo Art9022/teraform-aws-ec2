@@ -1,4 +1,12 @@
+terraform {
+  cloud {
+    organization = "artur_ayvazyan"
 
+    workspaces {
+      name = "homework_2"
+    }
+  }
+}
 
 terraform {
   required_providers {
@@ -58,12 +66,13 @@ tags = {
 
 
 resource "aws_security_group" "My_webServer" {
-  name        = "My Sg"
+  name        = var.name
   description = "My First secgrup"
-    
+    tags = {
+    name  = var.name
    
 
-  
+  }
 
   ingress {
     
