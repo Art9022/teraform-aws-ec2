@@ -29,10 +29,15 @@ resource "aws_network_interface" "interface_0" {
   subnet_id = aws_subnet.frst_subnet.id
   private_ips = ["10.0.1.10"]
 
+  attachment {
+    instance = aws_instance.app_server.id
+    device_index = 1
+  }
+
 }
 
 resource "aws_security_group" "My_sg" {
-  name        = var.name
+  name        = "My_sg"
   description = "SG for ec2"
   vpc_id      = aws_vpc.frst_vpc.id
 
@@ -40,7 +45,7 @@ resource "aws_security_group" "My_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["10.0.1.0/24"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -56,13 +61,11 @@ resource "aws_instance" "app_server" {
   ami           = "ami-0b5eea76982371e91"
   instance_type = "t2.micro"
   user_data = file("user_data.sh")
-  security_groups = [aws_security_group.My_sg.name]
-  network_interface {
-    network_interface_id = aws_network_interface.interface_0.id
-    device_index = 1
-  }
+  vpc_security_group_ids = [aws_security_group.My_sg.id]
+  subnet_id = aws_subnet.frst_subnet.id
   
   tags = {
     "name" = var.name
   }
 }
+
