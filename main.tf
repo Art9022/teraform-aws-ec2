@@ -59,15 +59,12 @@ resource "aws_security_group" "My_sg" {
   }
 }
 
-resource "aws_security_group_rule" 
-"allow_all_outbound" {
-    type                 =
-  "egress"
+resource "aws_security_group_rule" "allow_all_outbound" {
+    type                 = "egress"
     from_port            = 0
     to_port              = 0
     protocol             = tcp
-    cidr_blocks          =
-  ["0.0.0.0/0"]
+    cidr_blocks          = ["0.0.0.0/0"]
     security_group_ids   = aws_security_group.My_sg.id
 
   
