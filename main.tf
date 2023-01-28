@@ -75,3 +75,6 @@ resource "aws_instance" "app_server" {
   }
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.frst_vpc.id
+}
