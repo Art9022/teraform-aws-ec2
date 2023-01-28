@@ -14,8 +14,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-  
-
 resource "aws_vpc" "frst_vpc" {
   cidr_block = "10.0.0.0/16"
 }
@@ -52,16 +50,6 @@ resource "aws_security_group" "My_sg" {
  
 }
 
-resource "aws_security_group_rule" "allow_all_outbound" {
-    type                 = "egress"
-    from_port            = 80
-    to_port              = 80
-    protocol             = "-1"
-    cidr_blocks          = ["0.0.0.0/0"]
-    security_group_id   = aws_security_group.My_sg.id
-
-  
-}
 
 resource "aws_instance" "app_server" {
   ami           = "ami-0b5eea76982371e91"
@@ -69,12 +57,17 @@ resource "aws_instance" "app_server" {
   user_data = file("user_data.sh")
   vpc_security_group_ids = [aws_security_group.My_sg.id]
   subnet_id = aws_subnet.frst_subnet.id
-  
+  depends_on = [aws_internet_gateway.gw]
   tags = {
     "name" = var.name
   }
+
 }
 
-resource "aws_internet_gateway" "igw" {
+resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.frst_vpc.id
+
+  tags = {
+    Name = var.name
+  }
 }
