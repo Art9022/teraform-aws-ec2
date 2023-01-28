@@ -22,6 +22,7 @@ resource "aws_subnet" "frst_subnet" {
   vpc_id     = aws_vpc.frst_vpc.id
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true
+  depends_on = [aws_internet_gateway.gw]
 }
 
 resource "aws_network_interface" "interface_0" {
@@ -47,9 +48,14 @@ resource "aws_security_group" "My_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
- 
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
 }
-
+}
 
 resource "aws_instance" "app_server" {
   ami           = "ami-0b5eea76982371e91"
@@ -59,7 +65,7 @@ resource "aws_instance" "app_server" {
   subnet_id = aws_subnet.frst_subnet.id
   depends_on = [aws_internet_gateway.gw]
   tags = {
-    "name" = var.name
+    Name = var.name
   }
 
 }
