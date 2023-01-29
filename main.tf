@@ -27,7 +27,8 @@ resource "aws_subnet" "frst_subnet" {
 
 resource "aws_network_interface" "interface_0" {
   subnet_id = aws_subnet.frst_subnet.id
-  private_ips = ["10.0.1.10"]
+  security_groups = [aws_security_group.My_sg.id]
+
 
   attachment {
     instance = aws_instance.app_server.id
