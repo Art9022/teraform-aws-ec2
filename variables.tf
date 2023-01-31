@@ -5,15 +5,7 @@ variable "name" {
   
 }
 
-variable "common_tags" {
-
-  description = "common tags"
-  type    = map
-  default = {
-  Ouner   = "Artur"
-  Company = "Ayvazyan LLC"
-  Enviroment = "dev"
-  
-  }
-  
+variable "instance_type" {
+  type    = string
+  default = "t2.micro"
 }
