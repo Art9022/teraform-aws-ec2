@@ -74,5 +74,5 @@ output "aws_network_interface_id" {
 }
 
 output "web-address" {
-  value = "${aws_instance.web.public_dns}:80"
+  value = "${aws_instance.app_server.public_dns}:80"
 }

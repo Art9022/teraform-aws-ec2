@@ -1,6 +1,7 @@
 variable "name" {
   description = "Enter Name"
   type        = string
+  default = "Valodik"
  
   
 }
