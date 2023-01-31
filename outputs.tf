@@ -72,3 +72,7 @@ output "aws_network_interface_id" {
   value = aws_network_interface.interface_0.id
   
 }
+
+output "web-address" {
+  value = "${aws_instance.web.public_dns}:80"
+}
