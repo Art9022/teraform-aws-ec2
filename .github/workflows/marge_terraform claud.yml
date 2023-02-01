@@ -1,4 +1,4 @@
-name: "Marge Terraform Cloud"
+name: "Terraform apply"
 
 on:
   workflow_dispatch:
