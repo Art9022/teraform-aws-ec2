@@ -23,7 +23,16 @@ jobs:
           
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+      - name: Terraform Init
+        id: init
+        run: terraform init
       
+      
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
 
       - name: Terraform destroy
         id: destroy
