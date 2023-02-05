@@ -21,25 +21,36 @@ terraform {
   }
 }
 
-
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
-resource "aws_vpc" "frst_vpc" {
-  cidr_block = "10.0.0.0/16"
+locals {
+  name_suffix = "${var.project_name}-${var.environment}"
+}
 
-  tags = {
-    Name = "${var.name}_vpc"
+locals {
+  required_tags = {
+    project     = var.project_name,
+    environment = var.environment
   }
+  tags = merge(var.resource_tags, local.required_tags)
+}
+
+
+resource "aws_vpc" "frst_vpc" {
+  name = "vpc-${local.name_suffix}"
+  cidr_block = var.vpc_cidr_block
+
+  tags = lacol.tags
 }
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.frst_vpc.id
 
   tags = {
-    Name = "${var.name}_aws_internet_gateway"
+    Name = "${name_suffix}_aws_internet_gateway"
   }
 }
 
@@ -52,7 +63,7 @@ resource "aws_route_table" "first_route_table" {
   }
 
   tags = {
-    Name = "${var.name}_route_table"
+    Name = "${local.name_suffix}_route_table"
   }
 }
 
@@ -63,7 +74,7 @@ resource "aws_subnet" "frst_subnet" {
   map_public_ip_on_launch = true
   
   tags = {
-    Name = "${var.name}_publik_subnet"
+    Name = "${local.name_suffix}_publik_subnet"
   }
 }
 
@@ -73,7 +84,7 @@ resource "aws_route_table_association" "a" {
 }
 
 resource "aws_security_group" "My_sg" {
-  name        = "${var.name}_security_grup"
+  name        = "${local.name_suffix}_security_grup"
   description = "SG for ec2"
   vpc_id      = aws_vpc.frst_vpc.id
 
@@ -92,7 +103,7 @@ resource "aws_security_group" "My_sg" {
     ipv6_cidr_blocks = ["::/0"]
 }
    tags = {
-    Name = "${var.name}_security_grup"
+    Name = "${local.name_suffix}_security_grup"
    }
 
 }
@@ -121,7 +132,7 @@ resource "aws_instance" "app_server" {
   depends_on = [aws_internet_gateway.gw]
   
   tags = {
-    Name = "${var.name}_instance"
+    Name = "${local.name_suffix}_instance"
   }    
 
 }
